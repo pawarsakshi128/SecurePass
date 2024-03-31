@@ -23,7 +23,7 @@ Secure Pass is a simple web application that allows users to analyze their passw
 1. **Clone the Repository:**
 
 2. **Run the Spring Boot Application:**
-- Import the project into your favorite IDE (like IntelliJ IDEA, Eclipse).
+- Import the project into your favorite IDE (like IntelliJ IDEA, Eclipse, VS Code).
 - Run the main class `Application.java` to start the Spring Boot application.
 
 3. **Open the Frontend:**
