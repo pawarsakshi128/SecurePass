@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="generator_style.css">
+    <title>Secure Pass</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="index.html" class="logo">SecurePass</a>
+    </div>
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Strong Password Generator</h2>
+            <input type="strong_password" id="passwordLength" placeholder="Enter the length of the password you want to generate (above 8):"><br>
+            <button onclick="generatePassword()">Generate</button><br>
+            <div id="outputField"></div>
+        </div>
+    </section>
+    <script>
+        function generatePassword() {
+            var length = document.getElementById("passwordLength").value;
+            var outputField = document.getElementById("outputField");
+            fetch('http://localhost:8080/generate-password?length=' + length)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(password => {
+                    outputField.textContent = "Generated Password: " + password;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error generating password. Please try again.');
+                });
+        }
+    </script>
+</body>
+</html>

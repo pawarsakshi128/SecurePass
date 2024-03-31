@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="login_style.css">
+    <title>Secure Pass</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="index.html" class="logo">SecurePass</a>
+    </div>
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="login-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <input type="text" class="input-field" id="username" placeholder="Username"><br>
+                    <input type="password" class="input-field" id="password" placeholder="Password"><br>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <p id="response"></p> <!-- Element to display response -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function login(event) {
+            event.preventDefault(); // Prevent default form submission
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/login", true); // Assuming backend is running on localhost:8080
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Display response on the webpage
+                        document.getElementById("response").innerText = xhr.responseText;
+                    } else {
+                        // Display error message on the webpage
+                        document.getElementById("response").innerText = "Error: " + xhr.status;
+                    }
+                }
+            };
+
+            var data = JSON.stringify({
+                "username": username,
+                "password": password
+            });
+
+            xhr.send(data);
+        }
+
+        // Attach login function to the form submission event
+        document.getElementById("login-form").addEventListener("submit", login);
+    </script>
+
+</body>
+
+</html>

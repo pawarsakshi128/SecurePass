@@ -1,0 +1,47 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Secure Pass</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="index.html" class="logo">SecurePass</a>
+    </div>
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Password Strength Checker</h2>
+            <input type="password" id="password" placeholder="Enter your password"><br>
+            <button onclick="PasswordStrength()">Check Password Strength</button>
+            <button onclick="PasswordGenerator()">Generate Strong Password</button>
+            <div id="outputField"></div>
+        </div>
+    </section>
+    <script>
+        function PasswordStrength() {
+            var password = document.getElementById("password").value;
+            var outputField = document.getElementById("outputField");
+    
+            // Send a GET request to the Spring Boot backend for password strength checking
+            fetch('http://localhost:8080/checkPasswordStrength?password=' + encodeURIComponent(password))
+                .then(response => response.text())
+                .then(data => {
+                    // Display the result in the output field
+                    outputField.innerText = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    outputField.innerText = "An error occurred. Please try again later.";
+                });
+        }
+    
+        function PasswordGenerator() {
+            window.location.href = "generator.html";
+        }
+    </script>
+</body>
